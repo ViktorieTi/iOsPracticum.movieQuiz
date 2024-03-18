@@ -130,7 +130,7 @@ final class MovieQuizViewController: UIViewController {
     private func findBestResult (correctAnswers: Int, bestResult: Int) {
         if self.correctAnswers > self.bestResult {
             self.bestResult = self.correctAnswers
-            bestResultDate = "\(Date())"
+            bestResultDate = "\(Date().dateTimeString)"
         }
     }
     
