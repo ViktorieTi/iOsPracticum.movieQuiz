@@ -1,4 +1,5 @@
 import UIKit
+
 final class MovieQuizViewController: UIViewController {
     
     @IBOutlet private var counterLabel: UILabel!
@@ -23,7 +24,7 @@ final class MovieQuizViewController: UIViewController {
     private var quizCount = 0
     private var bestResult = 0
     private var bestResultDate = ""
-    
+
     struct QuizQuestion {
         let image: String
         let text: String // строка с вопросом о рейтинге фильма
@@ -47,8 +48,8 @@ final class MovieQuizViewController: UIViewController {
         let resultDate: String
     }
     
+    private var quizAllResults: [Int] = []
     private var results: [Result] = []
-
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
@@ -136,11 +137,13 @@ final class MovieQuizViewController: UIViewController {
     private func showNextQuestionOrResults() {
         if currentQuestionIndex == questions.count - 1 {
             quizCount += 1
-            results.append(Result(
-                correctCount: correctAnswers,
-                resultDate: "дата"))
-           
-            print(results)
+            quizAllResults += [correctAnswers]
+            var sum = quizAllResults.reduce(0, {x, y in x + y})
+            var average = sum / quizAllResults.count * 10
+            print("\(average).00%")
+//            results.append(Result(
+//            correctCount: correctAnswers,
+//            resultDate: "\(Date())"))
             self.findBestResult(correctAnswers: correctAnswers, bestResult: bestResult)
             
             let viewModel = QuizResultsViewModel(
@@ -149,6 +152,7 @@ final class MovieQuizViewController: UIViewController {
                 Ваш результат: \(correctAnswers)/10
                 Количество сыгранных квизов: \(quizCount)
                 Рекорд: \(bestResult)/10 (\(bestResultDate))
+                Средняя точность: \(average).00%
                 """,
                 buttonText: "Сыграть ещё раз")
             
