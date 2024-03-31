@@ -140,6 +140,7 @@ final class MovieQuizViewController: UIViewController {
             quizAllResults += [correctAnswers]
             var sum = quizAllResults.reduce(0, {x, y in x + y})
             var average = sum / quizAllResults.count * 10
+            print(quizAllResults)
             print("\(average).00%")
 //            results.append(Result(
 //            correctCount: correctAnswers,
